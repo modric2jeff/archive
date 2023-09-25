@@ -1,0 +1,330 @@
+Repo v2.36.1 prerelease
+2023年8月29日
+Here are the changes since v2.36
+
+1e9f7b9 (Jason Chang) project: Preserve stderr on upload  (tag: v2.36.1)
+1dbf8b4 (Daniel Kutik) tox.ini: add isort as dependency
+
+Here are the changes in v2.36 since v2.35
+
+6447733 (Mike Frysinger) isort: format codebase  (tag: v2.36)
+06ddc8c (Mike Frysinger) tweak stdlib imports to follow Google style guide
+16109a6 (Gavin Mak) upload: Suggest full sync if hooks fail with partially synced tree
+321b793 (Gavin Mak) sync: Ignore repo project when checking partial syncs
+5a3a5f7 (Jason Chang) upload: fix error handling
+11cb960 (Gavin Mak) docs: Document .repo_localsyncstate.json
+8914b1f (Jason Chang) gitc: drop support
+082487d (Daniel Kutik) tox: enable python 3.11 testing
+f767f7d (Daniel Kutik) flake8: exclude venv and .tox folder
+1a3612f (Jason Chang) Raise RepoExitError in place of sys.exit
+f0aeb22 (Gavin Mak) sync: Warn if partial sync state is detected
+f1ddaaa (Gavin Mak) main: Pass path to python binary as arg0 when restarting repo
+f9aacd4 (Jason Chang) Raise repo exit errors in place of sys.exit
+b8a7b4a (Jason Chang) Prefix error events with RepoErrorEvent:
+32b5956 (Jason Chang) Refactor errors for sync command
+a6413f5 (Jason Chang) Update errors to extend BaseRepoError
+8c35d94 (Aravind Vasudevan) [repo logging] Add logging module
+1d2e99d (Gavin Mak) sync: Track last completed fetch/checkout
+
+
+
+
+
+
+
+======================
+repo v2.35 prerelease
+2023年7月14日 03:58:47
+Here are the changes since v2.34.1:
+
+c657844 (Jason Chang) main: Fix exitcode logging
+
+1d3b4fb (Jason Chang) sync: Track new/existing project count
+
+be71c2f (Fredrik de Groot) manifest: enable remove-project using path
+
+696e0c4 (Mike Frysinger) update links from monorail to issuetracker
+
+b2263ba (Gavin Mak) sync: Handle case when output isn't connected to a terminal
+
+
+============================================
+repo v2.32 prerelease
+2023年3月3日 04:54:20
+
+Here are the changes since v2.31:
+
+7fa149b (Joanna Wang) upload: Skip upload if merge branch doesn't match project revision and dest_branch.
+a56e0e1 (Gavin Mak) tests: Change docstring for CopyLinkTestCase
+3ed8446 (Gavin Mak) tests: Rework run_tests to use pytest directly and add vpython3 file
+4806771 (Josip Sokcevic) sync: Remove unused variable
+69427da (Josip Sokcevic) Handle KeyboardInterrupt during repo sync
+dccf38e (Josip Sokcevic) Update sync progress
+7f44d36 (LaMont Jones) project: clean up error message
+2aa5d32 (Josip Sokcevic) Update bug tracking links
+016a254 (Joanna Wang) git_superproject: Log actual error fmt instead of the entire error message.
+7eab0ee (Michael Kelly) sync: Silence 'not found in manifest' message
+7e3b65b (Gavin Mak) Enable use of REPO_CONFIG_DIR to customize .repoconfig location
+c3d61ec (Gavin Mak) init: Silence the "rm -r .repo and try again" message if quiet
+78e82ec (Sergiy Belozorov) Fix flake8 warnings for some files
+37ae75f (Daniel Kutik) update_manpages.py: treat regex as raw string
+7438aef (Daniel Kutik) Use 'backslashreplace' for decode
+e641281 (Daniel Kutik) Use print with flush=True instead of stdout.flush
+035f22a (Daniel Kutik) pylint: remove unused imports
+e0728a5 (Mike Frysinger) update-manpages: clean up symlink in checkout
+d98f393 (David Greenaway) upload: Allow user to configure unusual commit threshold
+0324e43 (Joanna Wang) repo_trace: Avoid race conditions with trace_file updating.
+8d25584 (Mike Frysinger) github: enable flake8 postsubmit testing
+0e4f1e7 (Joanna Wang) Use --negotiation-tip in superproject fetches.
+e815286 (Mike Frysinger) tests: clean up repo_trace._TRACE_FILE patching
+0ab6b11 (Mike Frysinger) wrapper: switch to functools.lru_cache
+
+===========================================
+repo v2.30 prerelease
+2022年11月17日 04:54:47
+tl;dr: v2.30 avoids triggering a bug that can result in corruption of the workspace.  If your workflow has hit that issue, you should consider running `repo init --repo-rev=main` at this time.
+
+Due to the corruption issue, we expect to push this to stable as early as "tomorrow morning" (approximately 2022-11-17 10:00 America/Los Angeles).
+
+I have created a new release, but not yet pushed it live.  Instead, people have to opt-in to it by passing --repo-rev=main when running `repo init`.  You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+
+The changes since v2.29.9 are:
+d686365 (Sam Saccone) Extract env building into a testable helper.
+d3cadf1 (Sam Saccone) Do not set ALT object dirs when said path resolves to the same dir.
+fa90f7a (LaMont Jones) tests: Fix update-manpages test.
+bee4efb (LaMont Jones) subcmds: display correct path multitree messages
+f8af33c (LaMont Jones) update-manpages: explicitly strip color codes
+ed25be5 (LaMont Jones) repo_trace: drop notification of trace file name.
+afd7671 (LaMont Jones) repo_trace: adjust formatting, update man page.
+b240d28 (LaMont Jones) upload: track projects by path, rather than name 
+
+==============================================
+Repo v2.29.9 
+2022年11月15日 05:13:59
+I have created a new release, but not yet pushed it live.  Instead, people have to opt-in to it by passing --repo-rev=main when running `repo init`.  You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+As part of ongoing work on an issue, this may be marked stable as early as "after lunch tomorrow" (2022-11-10 12:00 America/Los Angeles).
+
+The more significant changes in this release are:
+Repo no longer invokes `git gc --auto` during sync, unless the `--auto-gc` flag is present.  This is a change of default.
+Repo now defaults to `--trace` unless the environment includes `REPO_TRACE=0`.
+
+The changes since v2.29.7(*) are:
+24c6314 (Joanna Wang) Fix TRACE_FILE renaming.
+7efab53 (LaMont Jones) sync: no garbage collection by default
+a3ff64c (LaMont Jones) Improve always-on-trace
+776138a (LaMont Jones) Merge branch stable into main (--strategy=ours).
+5fb9c6a (LaMont Jones) v2.29.7: Revert back to v2.29.5
+859d3d9 (Woody Lin) GitcInit: fix gitc-init failure
+fa8d939 (LaMont Jones) sync: clear preciousObjects when set in error.
+a6c52f5 (Joanna Wang) Set tracing to always on and save to .repo/TRACE_FILE.
+0d130d2 (Peter Kjellerstedt) tests: Make the tests pass for Python < 3.8
+With v2.29.9 (now tagged on main):
+Progress indications have been restored
+The previous behavior (sync runs `git gc --auto`) can be turned on with `REPO_AUTO_GC=1`.
+The changes since v2.29.8 are:
+7020ba (LaMont Jones) trace: restore Progress indicator.  (tag: v2.29.9)
+5ed8c63 (LaMont Jones) sync: REPO_AUTO_GC=1 to restore old behavior.
+
+
+
+============================================
+repo v2.28 prerelease
+2022年7月19日 06:33:29
+I've created a new release, but not yet pushed it live.  Instead, people have to opt-in to it by passing --repo-rev=main (or have export REPO_REV=main in your ~/.bashrc or ~/.zshrc) when running `repo init`.  You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+If things look good the rest of this week, I'll publish it next week.
+
+Here's the short log since repo 2.27:
+
+a8cf575 (LaMont Jones) Omit local_manifest groups from superproject override.
+8501d46 (LaMont Jones) status, diff: display correct path for multi-manifest
+8db78c7 (Martin Geisler) project: simplify if-statement
+9fb64ae (Martin Geisler) upload: add ‘--ignore-untracked-files’ option
+d47d9ff (Mike Frysinger) man: regenerate
+
+
+============================================
+repo v2.27 prerelease
+I've created a new release, but not yet pushed it live.  Instead, people have to opt-in to it by passing --repo-rev=main (or have export REPO_REV=main in your ~/.bashrc or ~/.zshrc) when running `repo init`.  You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+If things look good the rest of this week, I'll publish it next week.
+
+Here's the short log since repo 2.26:
+
+68d6963 (LaMont Jones) Fix Projects.shareable_dirs
+ff6b1da (LaMont Jones) Only sync superproject if it will be used.
+bdcba7d (LaMont Jones) sync: add multi-manifest support
+1d00a7e (Mike Frysinger) project: initial separation of shared project objects
+3a0a145 (Mike Frysinger) upload: move label validation to core function
+74737da (Mike Frysinger) tests: switch to tempfile.TemporaryDirectory
+0ddb677 (LaMont Jones) project: fix --use-superproject logic for init.
+501733c (LaMont Jones) manifest: add submanifest.default_groups attribute
+0165e20 (LaMont Jones) project: Do not exit early on --standalone-manifest.
+0de4fc3 (LaMont Jones) project: Add missing imports
+4c11aeb (Mike Frysinger) progress: optimize progress bar updates a bit
+b90a422 (LaMont Jones) Override the manifest for the entire command
+a46047a (LaMont Jones) sync: refactor use of self.manifest
+5fa912b (LaMont Jones) Stop passing optparse.Values to git_superproject
+4ada043 (LaMont Jones) ManifestProject: add manifest_platform
+d8de29c (LaMont Jones) forall: fix multi-manifest variables.
+2cc3ab7 (LaMont Jones) git_superproject: only print beta notice once.
+d56e2eb (LaMont Jones) manifest_xml: use Superproject to hold XML content
+d52ca42 (Daniel Andersson) sync: respect `sync-c` manifest option
+a2ff20d (LaMont Jones) manifest_xml: Add Load and Unload methods
+55ee304 (LaMont Jones) Fix sub manifest handling
+409407a (LaMont Jones) init: add multi-manifest support
+d82be3e (LaMont Jones) Move manifest config logic into ManifestProject
+9b03f15 (LaMont Jones) project: add ManifestProject.Sync()
+9b72cf2 (LaMont Jones) project: Isolate ManifestProject from RepoProject
+5d3291d (LaMont Jones) manifest_file must be an absolute path
+244c9a7 (Josh Steadmon) trace: allow writing traces to a socket
+b308db1 (LaMont Jones) manifest_xml: group for submanifest projects
+
+=============================================
+repo v2.26 prerelease
+2022年5月27日 13:31:59
+
+I've created a new release, but not yet pushed it live.  Instead, people have to opt-in to it by passing --repo-rev=main (or have export REPO_REV=main in your ~/.bashrc or ~/.zshrc) when running `repo init`.  You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+If things look good the rest of this week, I'll publish it next week.
+
+Here's the short log since repo 2.25; among other changes, we have addressed a regression that would prevent repo from working when using superproject at repo init:
+
+bdcba7d (LaMont Jones) sync: add multi-manifest support
+1d00a7e (Mike Frysinger) project: initial separation of shared project objects
+3a0a145 (Mike Frysinger) upload: move label validation to core function
+74737da (Mike Frysinger) tests: switch to tempfile.TemporaryDirectory
+0ddb677 (LaMont Jones) project: fix --use-superproject logic for init.
+
+
+=============================================
+repo v2.25 prerelease
+2022年5月3日 00:51:54
+
+For completeness, here is the short log between v2.21 and v2.24.1:
+
+501733c (LaMont Jones) manifest: add submanifest.default_groups attribute
+0165e20 (LaMont Jones) project: Do not exit early on --standalone-manifest.
+0de4fc3 (LaMont Jones) project: Add missing imports
+4c11aeb (Mike Frysinger) progress: optimize progress bar updates a bit
+b90a422 (LaMont Jones) Override the manifest for the entire command
+a46047a (LaMont Jones) sync: refactor use of self.manifest
+5fa912b (LaMont Jones) Stop passing optparse.Values to git_superproject
+4ada043 (LaMont Jones) ManifestProject: add manifest_platform
+d8de29c (LaMont Jones) forall: fix multi-manifest variables.
+2cc3ab7 (LaMont Jones) git_superproject: only print beta notice once.
+d56e2eb (LaMont Jones) manifest_xml: use Superproject to hold XML content
+d52ca42 (Daniel Andersson) sync: respect `sync-c` manifest option
+a2ff20d (LaMont Jones) manifest_xml: Add Load and Unload methods
+55ee304 (LaMont Jones) Fix sub manifest handling
+409407a (LaMont Jones) init: add multi-manifest support
+d82be3e (LaMont Jones) Move manifest config logic into ManifestProject
+9b03f15 (LaMont Jones) project: add ManifestProject.Sync()
+9b72cf2 (LaMont Jones) project: Isolate ManifestProject from RepoProject
+5d3291d (LaMont Jones) manifest_file must be an absolute path
+244c9a7 (Josh Steadmon) trace: allow writing traces to a socket
+b308db1 (LaMont Jones) manifest_xml: group for submanifest projects
+cc879a9 (LaMont Jones) Add multi-manifest support with <submanifest> element
+87cce68 (LaMont Jones) Move local-manifest check to manifest_xml.py
+adaa1d8 (LaMont Jones) project.py: pass --recurse-submodules={value}
+
+
+==========================================
+repo v2.24 prerelease
+2022年4月21日 
+I've pushed another release (v2.24.1) which addresses a regression introduced in release v2.23 (we have also rolled back the "stable" track to v2.21).  As usual, this is not pushed to stable track yet and people have to opt-in to it by passing --repo-rev=main when running `repo init`. You can then run `repo selfupdate && repo version` to double check your local state.
+
+So please bang on things and let us know how it goes.  Even "it works" is useful feedback as it means I'm not the only one running it :).
+If things look good the rest of this week, I'll publish it next week.
+
+Here's the short log compared against v2.21 for completeness, with changes that are already in earlier releases grey'ed.
+0de4fc3 (LaMont Jones) project: Add missing imports
+4c11aeb (Mike Frysinger) progress: optimize progress bar updates a bit
+b90a422 (LaMont Jones) Override the manifest for the entire command
+a46047a (LaMont Jones) sync: refactor use of self.manifest
+5fa912b (LaMont Jones) Stop passing optparse.Values to git_superproject
+4ada043 (LaMont Jones) ManifestProject: add manifest_platform
+d8de29c (LaMont Jones) forall: fix multi-manifest variables.
+2cc3ab7 (LaMont Jones) git_superproject: only print beta notice once.
+d56e2eb (LaMont Jones) manifest_xml: use Superproject to hold XML content
+d52ca42 (Daniel Andersson) sync: respect `sync-c` manifest option
+a2ff20d (LaMont Jones) manifest_xml: Add Load and Unload methods
+55ee304 (LaMont Jones) Fix sub manifest handling
+409407a (LaMont Jones) init: add multi-manifest support
+d82be3e (LaMont Jones) Move manifest config logic into ManifestProject
+9b03f15 (LaMont Jones) project: add ManifestProject.Sync()
+9b72cf2 (LaMont Jones) project: Isolate ManifestProject from RepoProject
+5d3291d (LaMont Jones) manifest_file must be an absolute path
+244c9a7 (Josh Steadmon) trace: allow writing traces to a socket
+b308db1 (LaMont Jones) manifest_xml: group for submanifest projects
+cc879a9 (LaMont Jones) Add multi-manifest support with <submanifest> element
+87cce68 (LaMont Jones) Move local-manifest check to manifest_xml.py
+adaa1d8 (LaMont Jones) project.py: pass --recurse-submodules={value}
+
+=====================================
+repo v2.21 prerelease
+2022年2月4日 05:50:21
+
+Here's the short log since the last release.
+8e91248655ac (Mike Frysinger) project: mark gc.log as safe to discard when migrating .git/
+630876f9e491 (XD Trol) init: add an option --enable-git-lfs-filter
+4aa8584ec6a5 (Mike Frysinger) init: make bad --repo-rev settings more clear
+b550501254a0 (Peter Kjellerstedt) project: Ignore failure to remove the sample hooks
+a535ae441824 (LaMont Jones) branches: Fix "not in" handling
+67d6cdf2bc75 (Mike Frysinger) project: store objects in project-objects directly
+152032cca2a7 (Mike Frysinger) project: move --reference handling to project-objects
+a3ac81627885 (Sebastian Wagner) test_project: use os.readlink instead of Path.readlink
+-mike
+
+
+
+============================================
+repo v2.20 prerelease
+2022年1月11日
+Here's the short log since the last release.
+98bb76577d9e (Mike Frysinger) project: prune sample hooks
+d33dce0b773d (Mike Frysinger) project: drop support for symlinking internal .git files
+89ed8acdbe46 (Mike Frysinger) project: abort a bit earlier before migrating .git/
+13576a8cafb1 (Mike Frysinger) project: stop symlinking info dir under .git/
+2345906d04e6 (Mike Frysinger) project: stop symlinking description file under .git/
+41289c62b45e (Mike Frysinger) project: stop symlinking svn under .git/
+c72bd8486a23 (Mike Frysinger) project: clean up now unused code
+cf0ba48649ba (Raman Tenneti) sync: With --mirror option, don't display no-use-superproject... message.
+-mike
+
+
+============================================
+repo v2.19 prerelease 
+2022年1月5日
+
+Here's the short log since the last release.
+2a089cfee4a3 (Mike Frysinger) project: migrate worktree .git/ dirs to symlinks
+
+
+============================================
+2021/12/4
+repo v2.18 prerelease
+Here's the short log since the last release.
+4a478edb4438 (Raman Tenneti) init, sync: fixed flake8 warnings.
+6bd89aa6579c (Raman Tenneti) superproject: Inherit --no-use-superproject with --mirror option.
+9c1fc5bc5d1e (Robin Schneider) sync: Handle tag ref in "upstream" field
+333c0a499bd7 (Mike Frysinger) project: init hooks in objdir only
+fdeb20f43fa8 (Mike Frysinger) sync: link the internal-fs-layout doc into checkouts
+bf40957b38c6 (Mike Frysinger) git-review: add config file
+f9e81c922dc7 (Mike Frysinger) SUBMITTING_PATCHES: link to commit message style docs
+e6601067ed5d (Mike Frysinger) man: refresh pages
+3001d6a42645 (Mike Frysinger) help: fix grammar in help text
+00c5ea3787a6 (Sl0v3C) Fix typo for ValueError
+0531a623e19d (Mike Frysinger) sync: make --prune the default
+2273f46cb368 (Mike Frysinger) sync: fix --tags option
+7b9b251a5e86 (LaMont Jones) project: fix format string in error message
+6251729cb435 (Raman Tenneti) superproject: added 'implies -c' in the help of --use-superproject option.
+-mike
+
